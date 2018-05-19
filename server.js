@@ -4,13 +4,13 @@ const helmet = require('helmet');
 
 const server = express();
 
+//middleware
+server.use(express.json());
+server.use(helmet());
+
 server.listen(5000, () => {
     console.log('**APP RUNNING ON PORT 5000**');
 });
-
-//middleware
-server.use(express.json);
-server.use(helmet());
 
 server.get('/api/users', (req, res) => {
     db.find()
@@ -27,7 +27,7 @@ server.get('/api/users/:id', (req, res) => {
 
     db.findById(userId)
         .then(user => {
-            if (user === undefined) {
+            if (user.length === 0) {
                 res.status(404).json({ message: "The user with the specified ID does not exist." })
             } else {
                 res.status(200).json({ user })
@@ -40,7 +40,7 @@ server.get('/api/users/:id', (req, res) => {
 
 server.post('/api/users', (req, res) => {
     const newUser = req.body;
-    if (newUser.name === undefined || newUser.bio === undefined) {
+    if (newUser.name === undefined || newUser.bio === undefined || newUser.name.length === 0 || newUser.bio.length === 0) {
         res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
         return;
     } else {
@@ -56,38 +56,42 @@ server.post('/api/users', (req, res) => {
 
 server.delete('/api/users/:id', (req, res) => {
     const userId = req.params.id;
-    const deletedUser = db.findById(userId);
+    let deletedUser;
 
-    if (deletedUser === undefined) {
-        res.status(404).json({ message: "The user with the specified ID does not exist." });
-    } else {
-        db.remove(userId)
-            .then(user => {
-                res.status(200).json({ deletedUser });
-            })
-            .catch(err => {
-                res.status(500).json({ error: "The user could not be removed" });
-            })
-    }
+    db.findById(userId)
+        .then(user => {
+            if (user.length === 0) {
+                res.status(404).json({ message: "The user with the specified ID does not exist." });
+            }
+            else {
+                deletedUser = user[0];
+                db.remove(userId)
+                    .then(user => {
+                        res.status(200).json({ deletedUser });
+                    })
+                    .catch(err => {
+                        res.status(500).json({ error: "The user could not be removed" });
+                    })
+            }
+        })
 })
 
 server.put('/api/users/:id', (req, res) => {
     const userId = req.params.id;
-    const updateUser = db.findById(userId);
-    const userUpdate = req.params.body;
+    const updatedUser = req.body;
 
-    if (updateUser.name === undefined || updateUser.bio === undefined) {
-        res.status(404).json({ message: "The user with the specified ID does not exist." });
-    } else if (userUpdate.name === undefined || userUpdate.bio === undefined) {
-        res.status(400).json({ errorMessage: "Please provide name and bio for the user." })
-    } else {
-        db.update(userId, userUpdate)
-            .then(userUpdate => {
-                res.status(200).json({ userUpdate })
-            })
-            .catch(err => {
-                res.status(500).json({ error: "The user information could not be modified." })
-            })
+    if (updatedUser.name === undefined || updatedUser.bio === undefined || updatedUser.name.length === 0 || updatedUser.bio.length === 0) {
+        res.status(400).json({ errorMessage: "Please provide name and bio for the user." });
     }
-
+    db.update(userId, updatedUser)
+        .then(num => {
+            if (num === 0) {
+                res.status(404).json({ message: "The post with the specified ID does not exist." })
+            } else {
+                db.findById(userId)
+                    .then(user => res.status(200).json(user))
+                    .catch(err => res.status(500).json({ error: "The post information could not be modified." }))
+            }
+        })
+        .catch(err => res.status(500).json({ error: "The post information could not be modified." }))
 })
