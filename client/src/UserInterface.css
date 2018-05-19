@@ -1,0 +1,16 @@
+.user {
+    /* border: 1px solid black; */
+    padding: 1%;
+    margin: 1%;
+}
+
+.userName {
+    font-weight: bold;
+    text-transform: capitalize;
+    text-align: end;
+}
+
+.col {
+   width: 100%;
+   max-width: 200px;
+}

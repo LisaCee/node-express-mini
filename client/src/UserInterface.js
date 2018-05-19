@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
 
+import './UserInterface.css';
+
 class UserInterface extends Component {
     constructor() {
         super();
@@ -25,18 +27,37 @@ class UserInterface extends Component {
         return (
             <Container className='container'>
                 <h1>Users</h1>
-                { this.state.users.map((user, id) => {
-                    return (
-                    <div className='user'
-                        key={ user.id }>
-                        { user.name }
-                        { user.bio }
-                    </div>
-                    )
-                }) }
+                <Row>
+                    
+                    <Col xs="6">
+                        { this.state.users.map((user, id) => {
+                            return (
+                                <div className='user'
+                                    key={ user.id }>
+                                    <div className='userName'>
+                                        { user.name }
+                                    </div>
+                                </div>
+                            )
+                        }) }
+                    </Col>
+                    <Col xs="6">
+                        { this.state.users.map((user, id) => {
+                            return (
+                                <div className='user'
+                                    key={ user.id }>
+                                    <div className='userBio'>
+                                        { user.bio }
+                                    </div>
+                                </div>
+                            )
+                        }) }
+                    </Col>
+                  
+                </Row>
             </Container>
-        )
-    }
-}
-
+                )
+            }
+        }
+        
 export default UserInterface;
