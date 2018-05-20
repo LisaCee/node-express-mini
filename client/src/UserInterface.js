@@ -28,36 +28,39 @@ class UserInterface extends Component {
             <Container className='container'>
                 <h1>Users</h1>
                 <Row>
-                    
-                    <Col xs="6">
-                        { this.state.users.map((user, id) => {
-                            return (
-                                <div className='user'
-                                    key={ user.id }>
-                                    <div className='userName'>
-                                        { user.name }
-                                    </div>
-                                </div>
-                            )
-                        }) }
-                    </Col>
-                    <Col xs="6">
-                        { this.state.users.map((user, id) => {
-                            return (
-                                <div className='user'
-                                    key={ user.id }>
-                                    <div className='userBio'>
-                                        { user.bio }
-                                    </div>
-                                </div>
-                            )
-                        }) }
-                    </Col>
-                  
+                    <table>
+                        <tr>
+                            <div className='user'>
+                                <td>
+                                    { this.state.users.map((user, id) => {
+                                        return (
+                                            <div key={ user.id }>
+                                                <div className='userName'>
+                                                    { user.name }
+                                                </div>
+                                            </div>
+                                        )
+                                    }) }
+                                </td>
+                            
+                                <td>
+                                    { this.state.users.map((user, id) => {
+                                        return (
+                                            <div key={ user.id }>
+                                                <div className='userBio'>
+                                                    { user.bio }
+                                                </div>
+                                            </div>
+                                        )
+                                    }) }
+                                </td>
+                            </div>
+                        </tr>
+                    </table>
                 </Row>
             </Container>
-                )
-            }
-        }
-        
+        )
+    }
+}
+
 export default UserInterface;

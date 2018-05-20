@@ -1,16 +1,27 @@
 .user {
-    /* border: 1px solid black; */
-    padding: 1%;
-    margin: 1%;
+    border: 1px solid red;
 }
 
 .userName {
     font-weight: bold;
     text-transform: capitalize;
-    text-align: end;
+    height: 50px;
+    width: 100%;
+    min-width: 150px;
+    border-right: 2px solid purple;
+    border-bottom: 1px solid black;
+    padding: 5%;
 }
 
-.col {
-   width: 100%;
-   max-width: 200px;
+.userBio {
+    margin-left: 1%;
+    height: 50px;
+    width: 100%;
+    min-width: 200px;
+    border-bottom: 1px solid black;
+    padding: 5%;
+}
+
+table {
+    border: 1px solid teal;
 }
