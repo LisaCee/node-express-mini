@@ -1,16 +1,12 @@
-.user {
-    border: 1px solid red;
-}
-
-.userName {
+/* .userName {
     font-weight: bold;
     text-transform: capitalize;
     height: 50px;
     width: 100%;
     min-width: 150px;
-    border-right: 2px solid purple;
     border-bottom: 1px solid black;
     padding: 5%;
+    border-collapse: collapse;
 }
 
 .userBio {
@@ -20,8 +16,15 @@
     min-width: 200px;
     border-bottom: 1px solid black;
     padding: 5%;
+} */
+
+table, td {
+    border: 1px solid teal;
 }
 
-table {
-    border: 1px solid teal;
+.userName, .userBio {
+    border-bottom: 1px solid black;
+    border-collapse: collapse;
+    padding: 5%;
+    height: 50px;
 }
